@@ -18,24 +18,28 @@ Input path: data/test.osm
 
 # Exercice 2 - Lecture de code et compréhension
 
-1. Identifiez où sont définies les structures principales du graphe (WeightedGraph / PositionedGraph) et expliquez brièvement leur rôle et comment elles sont utilisées.
+## Question 1
 
-`WeightedGraph` est situé dans `src/dataStructure`
+_Identifiez où sont définies les structures principales du graphe (WeightedGraph / PositionedGraph) et expliquez brièvement leur rôle et comment elles sont utilisées._
 
-> il sert à avoir des poids associé à chaque noeud du grave via `adjency_list` qui associe une ID de noeud à une liste de voisins (`std::vector<WeightedArc>`) et `WeightedArc` contient un poids (`weight`) et le noeud qu'il pointe (`to`)
->
-> ℹ️ c'est donc un graphes pondéré et orienté
+`WeightedGraph` est situé dans [src/dataStructure](./src/dataStructure)
 
-`PositionedGraph` est situé dans `src/osm`
+> Il sert à avoir des poids associé à chaque noeud du grave via `adjency_list` qui associe une ID de noeud à une liste de voisins (`std::vector<WeightedArc>`) et `WeightedArc` contient un poids (`weight`) et le noeud qu'il pointe (`to`)
 
-> il utilise `WeightedGraph` pour son graphe, cependant il utilise contient aussi la liste des noeuds avec ses coordonnées 2D (`std::unordered_map<OSM::NodeId, glm::vec2> nodes`)
->
-> ℹ️ c'est donc un graphes pondéré et orienté avec la liste des positions (dans un espace 2D) des noeuds
+> ℹ️ C'est donc un graphes pondéré et orienté
 
-1. Expliquez en quelques lignes le rôle des modules:
+`PositionedGraph` est situé dans [src/osm](./src/osm)
 
-- extraction OSM,
-- simplification,
-- visualisation.
+> Il utilise `WeightedGraph` pour son graphe, cependant il utilise contient aussi la liste des noeuds avec ses coordonnées 2D (`std::unordered_map<OSM::NodeId, glm::vec2> nodes`)
+
+> ℹ️ C'est donc un graphes pondéré et orienté avec la liste des positions (dans un espace 2D) des noeuds
+
+## Question 2
+
+_Expliquez en quelques lignes le rôle des modules:_
+
+- _extraction OSM,_
+- _simplification,_
+- _visualisation._
 
 3. Expliquez ce que vous comprenez des différentes étapes de simplification implémentées (fichier src/simplification/simplify.cpp) et les raisons pour lesquelles elles sont utilisées (leur impact sur la structure du graphe, les avantages/inconvénients, etc.).
