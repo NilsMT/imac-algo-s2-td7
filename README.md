@@ -42,4 +42,18 @@ _Expliquez en quelques lignes le rôle des modules:_
 - _simplification,_
 - _visualisation._
 
-3. Expliquez ce que vous comprenez des différentes étapes de simplification implémentées (fichier src/simplification/simplify.cpp) et les raisons pour lesquelles elles sont utilisées (leur impact sur la structure du graphe, les avantages/inconvénients, etc.).
+L'extraction OSM permet d'ouvrir les fichiers `.osm` et les transformer en `PositionedGraph` en filtrant pour ne conserver que es routes (donc pas de rails et de bâtiments)
+
+La simplification reduit le nombres de connexions dans un graphe en fusionnant ceux qui sont très proches, et en conservant les plus grandes composants connexes
+
+La visualisation permet de visualisé un graphe avec l'algorithme de djikstra, avec un zoom inclus dans la fenêtre et le fait de réinitialiser un noeud en cliquant dessus
+
+## Question 3
+
+_Expliquez ce que vous comprenez des différentes étapes de simplification implémentées (fichier src/simplification/simplify.cpp) et les raisons pour lesquelles elles sont utilisées (leur impact sur la structure du graphe, les avantages/inconvénients, etc.)._
+
+1. On conserve les composantes connexes les plus larges pour optimisé le nombre de composantes enregistrées
+2. Supprime les noeud avec un seul degré (= une connexion) et proche de son voisin
+3. Si A -> B et A -> C, alors autant faire B -> C
+4. Si un groupe de noeud va vers un même voisin (d'après une certaine profondeur) alors on les fusionnes (= il font tous le même chemin)
+5. Réitère l'étape 3 car il y a eu un changement avec l'étape 4
