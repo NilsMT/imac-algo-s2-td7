@@ -52,7 +52,52 @@ std::unordered_map<IDType, std::pair<float, IDType>> Dijkstra(WeightedGraph cons
 
     to_visit.push({0.0f, start});
 
-    /* TODO */
+    //while we didnt reach the end OR can't reach it, continue
+    while(!to_visit.empty()) {
+        //get current node
+        std::pair<float, IDType> current = to_visit.top();
+        to_visit.pop();
+
+        //NOTE: debug
+        //std::cout << "at node " << current.second << " it costed " << current.first << "\n";
+
+        //get his neighbours
+        std::vector<DataStructure::WeightedArc> neighbours = graph.get_neighbors(current.second);
+
+        //add them as a need to visit
+        for (DataStructure::WeightedArc arc : neighbours) {
+            float new_cost = current.first + arc.weight;
+
+            //if we didn't find a way to reach it yet, or that it is less costly that way than before
+            if (distances.find(arc.to) == distances.end() || new_cost < distances[arc.to].first) {
+                distances[arc.to] = {new_cost, current.second};
+                to_visit.push({new_cost, arc.to});  //push here
+            }
+
+            /* NOTE: old crappy way but sound more logical
+            //if we can reach this neighbour
+            //if we already have a way to it at distance and we have a better way to reach (i.e from current to arc.weight)
+            //its better, so add as a way to visit
+            
+            float new_cost = current.first + arc.weight;
+            if (distances.find(arc.to) != distances.end() && new_cost < distances[arc.to].first) {
+                //NOTE: debug
+                std::cout << "Alternative way to reach node " << arc.to << " with a better way\n";
+                std::cout << "Old way cost " << distances[arc.to].first << "from " << distances[arc.to].second << "\n";
+                std::cout << "New way cost " << arc.weight << "from " << current.second << "\n";
+
+                //better visiting and distance found
+                distances[arc.to] = std::pair<float, IDType> {new_cost,current.second};
+                to_visit.push({new_cost, arc.to});
+            } else if (distances.find(arc.to) == distances.end()) {
+                //NOTE: debug
+                std::cout << "First way to reach " << arc.to << " with a better way\n";
+                distances[arc.to] = std::pair<float, IDType> {new_cost,current.second};
+                to_visit.push({new_cost, arc.to});
+            }
+            */
+        }
+    }
     
     return distances;
 }
